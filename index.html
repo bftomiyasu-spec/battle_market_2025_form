@@ -56,12 +56,12 @@
             </div>
             <div>
                 <label for="full-name" class="block text-sm font-medium text-gray-700 mb-2">代表者氏名（フルネーム）</label>
-                <input type="text" id="full-name" name="entry.1402801926" placeholder="デス・富安・フォー・キューティー" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
+                <input type="text" id="full-name" name="entry.1402801926" placeholder="デス・富安・フォー・キューティー" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors" required>
             </div>
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-2">メールアドレス</label>
                 <p class="text-xs text-gray-500 mb-2">ご入力いただいたメールアドレスは、本企画に関するご連絡以外には一切使用しません。</p>
-                <input type="email" id="email" name="entry.476909455" placeholder="example@example.com" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
+                <input type="email" id="email" name="entry.476909455" placeholder="example@example.com" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors" required>
             </div>
             <div class="pt-6">
                 <button type="submit" id="submit-button" class="w-full flex justify-center py-3 px-4 rounded-lg shadow-lg text-lg font-bold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-colors">
@@ -94,28 +94,13 @@
             }
 
             form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                hideMessage();
-
-                // フォームの入力内容をチェック
+                // チケット枚数のバリデーションのみJavaScriptで行う
                 const generalTickets = document.getElementById('general-ticket').value;
                 const u22Tickets = document.getElementById('u22-ticket').value;
-                const fullName = document.getElementById('full-name').value.trim();
-                const email = document.getElementById('email').value.trim();
-
-                // バリデーションルール
+                
                 if (generalTickets === '0' && u22Tickets === '0') {
+                    e.preventDefault(); // 送信をキャンセル
                     showMessage('一般チケットまたはU-22チケットの枚数を1枚以上選択してください。');
-                    return;
-                }
-
-                if (fullName === '') {
-                    showMessage('代表者氏名を入力してください。');
-                    return;
-                }
-
-                if (email === '') {
-                    showMessage('メールアドレスを入力してください。');
                     return;
                 }
 
