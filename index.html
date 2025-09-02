@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BATTLE MARKET 2025 チケット予約フォーム</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+        @import url('[https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap](https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap)');
         body {
             font-family: 'Noto Sans JP', sans-serif;
             width: 100%;
@@ -30,7 +30,7 @@
         <!-- エラーメッセージ表示用の領域 -->
         <div id="message-box" class="hidden text-center text-sm p-3 my-4 rounded-lg border border-red-400 bg-red-100 text-red-700 transition-all duration-300"></div>
 
-        <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse" method="POST" class="space-y-6">
+        <form action="[https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse](https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse)" method="POST" class="space-y-6">
             <div>
                 <label for="general-ticket" class="block text-sm font-medium text-gray-700 mb-2">一般チケットの枚数を選択してください</label>
                 <select id="general-ticket" name="entry.927962343" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
@@ -64,7 +64,7 @@
                 <input type="email" id="email" name="entry.476909455" placeholder="example@example.com" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors" required>
             </div>
             <div class="pt-6">
-                <button type="submit" id="submit-button" class="w-full flex justify-center py-3 px-4 rounded-lg shadow-lg text-lg font-bold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-colors">
+                <button type="submit" id="submit-button" class="w-full flex justify-center py-3 px-4 rounded-lg shadow-lg text-lg font-bold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-colors opacity-50 cursor-not-allowed" disabled>
                     予約を確定する
                 </button>
             </div>
@@ -75,6 +75,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.querySelector('form');
             const submitButton = document.getElementById('submit-button');
+            const generalTicketSelect = document.getElementById('general-ticket');
+            const u22TicketSelect = document.getElementById('u22-ticket');
+            const fullNameInput = document.getElementById('full-name');
+            const emailInput = document.getElementById('email');
             const messageBox = document.getElementById('message-box');
 
             function showMessage(message, type = 'error') {
@@ -93,24 +97,53 @@
                 messageBox.classList.add('hidden');
             }
 
+            // Function to check form validity and toggle button state
+            function updateButtonState() {
+                const generalTickets = parseInt(generalTicketSelect.value);
+                const u22Tickets = parseInt(u22TicketSelect.value);
+                const fullName = fullNameInput.value.trim();
+                const email = emailInput.value.trim();
+
+                const isFormValid = (generalTickets + u22Tickets > 0) && fullName !== '' && email !== '';
+
+                if (isFormValid) {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                } else {
+                    submitButton.disabled = true;
+                    submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            }
+            
+            // Add real-time event listeners to all form fields
+            generalTicketSelect.addEventListener('change', updateButtonState);
+            u22TicketSelect.addEventListener('change', updateButtonState);
+            fullNameInput.addEventListener('input', updateButtonState);
+            emailInput.addEventListener('input', updateButtonState);
+
+            // Initial check on page load
+            updateButtonState();
+
             form.addEventListener('submit', async (e) => {
-                // チケット枚数のバリデーションのみJavaScriptで行う
-                const generalTickets = document.getElementById('general-ticket').value;
-                const u22Tickets = document.getElementById('u22-ticket').value;
+                // Prevent default submission to handle with JavaScript
+                e.preventDefault();
+                
+                // The button is already disabled if validation fails, so we only need to check the tickets here
+                const generalTickets = generalTicketSelect.value;
+                const u22Tickets = u22TicketSelect.value;
                 
                 if (generalTickets === '0' && u22Tickets === '0') {
-                    e.preventDefault(); // 送信をキャンセル
                     showMessage('一般チケットまたはU-22チケットの枚数を1枚以上選択してください。');
                     return;
                 }
 
-                // ローディング表示を開始
+                // Show loading state
                 submitButton.textContent = '送信中...';
                 submitButton.disabled = true;
                 submitButton.classList.add('opacity-50', 'cursor-not-allowed');
 
                 const formData = new FormData(form);
-                const googleFormsUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse';
+                const googleFormsUrl = '[https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse](https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse)';
                 const params = new URLSearchParams();
 
                 for (const [name, value] of formData.entries()) {
@@ -123,17 +156,19 @@
                         mode: 'no-cors'
                     });
 
-                    // 成功したらサンクスページにリダイレクト
+                    // Redirect to the thanks page after successful submission
                     window.location.href = './thanks.html';
 
                 } catch (error) {
                     console.error('予約送信中にエラーが発生しました:', error);
                     showMessage('申し訳ありません、予約送信中にエラーが発生しました。再度お試しください。', 'error');
                     
-                    // ローディング表示をリセット
+                    // Reset loading state
                     submitButton.textContent = '予約を確定する';
                     submitButton.disabled = false;
                     submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                    // Re-run the update to check form validity after the error
+                    updateButtonState();
                 }
             });
         });
