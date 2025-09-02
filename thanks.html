@@ -38,10 +38,14 @@
     </div>
 
     <script>
-        // ブラウザバックを無効化するロジック
+        // ブラウザバックを無効化し、強制的にトップページに戻るロジック
+        // ページを読み込んだら、ブラウザの履歴に現在のページを上書きする
         window.history.pushState(null, null, location.href);
+        
+        // ユーザーがブラウザの「戻る」ボタンを押したときに強制的にリダイレクトする
         window.addEventListener('popstate', (e) => {
-            window.history.pushState(null, null, location.href);
+            // トップページに強制的にリダイレクト
+            window.location.href = 'https://bftomiyasu.fanpla.jp/feature/BattleMarket_2025';
         });
     </script>
 </body>
