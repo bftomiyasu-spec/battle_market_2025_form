@@ -30,7 +30,7 @@
         <!-- エラーメッセージ表示用の領域 -->
         <div id="message-box" class="hidden text-center text-sm p-3 my-4 rounded-lg border border-red-400 bg-red-100 text-red-700 transition-all duration-300"></div>
 
-        <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse" method="POST" class="space-y-6">
+        <form id="reservationForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse" method="POST" target="_blank" class="space-y-6">
             <div>
                 <label for="general-ticket" class="block text-sm font-medium text-gray-700 mb-2">一般チケットの枚数を選択してください</label>
                 <select id="general-ticket" name="entry.927962343" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
@@ -124,52 +124,27 @@
             // Initial check on page load
             updateButtonState();
 
-            form.addEventListener('submit', async (e) => {
-                // Prevent default submission to handle with JavaScript
-                e.preventDefault();
-                
-                // The button is already disabled if validation fails, so we only need to check the tickets here
-                const generalTickets = generalTicketSelect.value;
-                const u22Tickets = u22TicketSelect.value;
-                
-                if (generalTickets === '0' && u22Tickets === '0') {
+            form.addEventListener('submit', (e) => {
+                const generalTickets = parseInt(generalTicketSelect.value);
+                const u22Tickets = parseInt(u22TicketSelect.value);
+
+                // チケット枚数が0枚の場合はフォームの送信を中断
+                if (generalTickets + u22Tickets === 0) {
+                    e.preventDefault();
                     showMessage('一般チケットまたはU-22チケットの枚数を1枚以上選択してください。');
                     return;
                 }
-
-                // Show loading state
+            
+                // フォームが送信されることをユーザーに知らせる
                 submitButton.textContent = '送信中...';
                 submitButton.disabled = true;
                 submitButton.classList.add('opacity-50', 'cursor-not-allowed');
-
-                const formData = new FormData(form);
-                const googleFormsUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse';
-                const params = new URLSearchParams();
-
-                for (const [name, value] of formData.entries()) {
-                    params.append(name, value);
-                }
-
-                try {
-                    await fetch(`${googleFormsUrl}?${params.toString()}`, {
-                        method: 'GET',
-                        mode: 'no-cors'
-                    });
-
-                    // Redirect to the thanks page after successful submission
+            
+                // フォームが正常に送信された後、thanksページにリダイレクト
+                // Googleフォームが回答を処理する時間を考慮して、少し遅延させる
+                setTimeout(() => {
                     window.location.href = './thanks.html';
-
-                } catch (error) {
-                    console.error('予約送信中にエラーが発生しました:', error);
-                    showMessage('申し訳ありません、予約送信中にエラーが発生しました。再度お試しください。', 'error');
-                    
-                    // Reset loading state
-                    submitButton.textContent = '予約を確定する';
-                    submitButton.disabled = false;
-                    submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
-                    // Re-run the update to check form validity after the error
-                    updateButtonState();
-                }
+                }, 1500); // 1.5秒後にリダイレクト
             });
         });
     </script>
