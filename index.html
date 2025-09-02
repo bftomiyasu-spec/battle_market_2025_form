@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BATTLE MARKET 2025 チケット予約フォーム</title>
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('[https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap](https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap)');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
         body {
             font-family: 'Noto Sans JP', sans-serif;
             width: 100%;
@@ -30,7 +30,7 @@
         <!-- エラーメッセージ表示用の領域 -->
         <div id="message-box" class="hidden text-center text-sm p-3 my-4 rounded-lg border border-red-400 bg-red-100 text-red-700 transition-all duration-300"></div>
 
-        <form action="[https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse](https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse)" method="POST" class="space-y-6">
+        <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse" method="POST" class="space-y-6">
             <div>
                 <label for="general-ticket" class="block text-sm font-medium text-gray-700 mb-2">一般チケットの枚数を選択してください</label>
                 <select id="general-ticket" name="entry.927962343" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
@@ -143,7 +143,7 @@
                 submitButton.classList.add('opacity-50', 'cursor-not-allowed');
 
                 const formData = new FormData(form);
-                const googleFormsUrl = '[https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse](https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse)';
+                const googleFormsUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse';
                 const params = new URLSearchParams();
 
                 for (const [name, value] of formData.entries()) {
