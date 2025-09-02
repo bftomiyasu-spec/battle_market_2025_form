@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BATTLE MARKET 2025 チケット予約フォーム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-white-100 text-gray-900 flex items-center justify-center p-6 min-h-screen">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg border border-gray-200">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-red-600 tracking-tight mb-2">BATTLE MARKET 2025</h1>
+            <p class="text-xl text-gray-700">～The Lates上京篇～</p>
+            <p class="mt-4 text-sm text-gray-500">2025.11.16（日） at 新栄DAYTRIVE</p>
+        </div>
+
+        <p class="text-center text-gray-600 mt-6 mb-8 border-t border-b border-gray-300 py-4">
+            予約&nbsp;¥3,500（U-22&nbsp;¥3,000）&nbsp;/&nbsp;当日&nbsp;¥4,000&nbsp;<br class="sm:hidden">すべて飲み放題＋フード付き
+        </p>
+
+        <!--ここにGoogleフォームのレスポンスURLを入力する（実際のGoogleフォーム回答画面から開発者ツールでformタグのactioin属性を探す）-->
+        <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse" method="POST" class="space-y-6">
+
+            <!--
+                新しいGoogleフォームの「一般チケットの枚数を選択してください」の
+                項目に対応するname属性（例: entry.1234567890）を
+                name="entry.1234567890" の部分に貼り付けてください。
+            -->
+            <div>
+                <label for="general-ticket" class="block text-sm font-medium text-gray-700 mb-2">一般チケットの枚数を選択してください</label>
+                <select id="general-ticket" name="entry.927962343" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <!--
+                新しいGoogleフォームの「U-22チケットの枚数を選択してください」の
+                項目に対応するname属性（例: entry.1234567890）を
+                name="entry.1234567890" の部分に貼り付けてください。
+            -->
+            <div>
+                <label for="u22-ticket" class="block text-sm font-medium text-gray-700 mb-2">U-22チケットの枚数を選択してください</label>
+                <p class="text-xs text-gray-500 mb-2">※2025/11/16時点で22歳以下の方が対象です。</p>
+                <select id="u22-ticket" name="entry.1297745417" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+
+            <!--
+                新しいGoogleフォームの「代表者氏名（フルネーム）」の
+                項目に対応するname属性（例: entry.1234567890）を
+                name="entry.1234567890" の部分に貼り付けてください。
+            -->
+            <div>
+                <label for="full-name" class="block text-sm font-medium text-gray-700 mb-2">代表者氏名（フルネーム）</label>
+                <input type="text" id="full-name" name="entry.1402801926" placeholder="デス・富安・フォー・キューティー" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
+            </div>
+
+            <!--
+                新しいGoogleフォームの「メールアドレス」の
+                項目に対応するname属性（例: entry.1234567890）を
+                name="entry.1234567890" の部分に貼り付けてください。
+            -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">メールアドレス</label>
+                <p class="text-xs text-gray-500 mb-2">ご入力いただいたメールアドレスは、本企画に関するご連絡以外には一切使用しません。</p>
+                <input type="email" id="email" name="entry.476909455" placeholder="example@example.com" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
+            </div>
+
+            <div class="pt-6">
+                <button type="submit" class="w-full flex justify-center py-3 px-4 rounded-lg shadow-lg text-lg font-bold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition-colors">
+                    予約を確定する
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+</body>
+</html>
