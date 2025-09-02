@@ -15,7 +15,7 @@
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 flex items-center justify-center p-6 min-h-screen">
-
+    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
     <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg border border-gray-200">
         <div class="text-center">
             <h1 class="text-4xl font-bold text-red-600 tracking-tight mb-2">BATTLE MARKET 2025</h1>
@@ -30,7 +30,7 @@
         <!-- エラーメッセージ表示用の領域 -->
         <div id="message-box" class="hidden text-center text-sm p-3 my-4 rounded-lg border border-red-400 bg-red-100 text-red-700 transition-all duration-300"></div>
 
-        <form id="reservationForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse" method="POST" target="_blank" class="space-y-6">
+        <form id="reservationForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse" method="POST" target="dummyframe" class="space-y-6">
             <div>
                 <label for="general-ticket" class="block text-sm font-medium text-gray-700 mb-2">一般チケットの枚数を選択してください</label>
                 <select id="general-ticket" name="entry.927962343" class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors">
@@ -81,6 +81,8 @@
             const emailInput = document.getElementById('email');
             const messageBox = document.getElementById('message-box');
 
+            const iframe = document.getElementById('dummyframe');
+
             function showMessage(message, type = 'error') {
                 messageBox.textContent = message;
                 messageBox.classList.remove('hidden');
@@ -97,7 +99,6 @@
                 messageBox.classList.add('hidden');
             }
 
-            // Function to check form validity and toggle button state
             function updateButtonState() {
                 const generalTickets = parseInt(generalTicketSelect.value);
                 const u22Tickets = parseInt(u22TicketSelect.value);
@@ -115,13 +116,11 @@
                 }
             }
             
-            // Add real-time event listeners to all form fields
             generalTicketSelect.addEventListener('change', updateButtonState);
             u22TicketSelect.addEventListener('change', updateButtonState);
             fullNameInput.addEventListener('input', updateButtonState);
             emailInput.addEventListener('input', updateButtonState);
 
-            // Initial check on page load
             updateButtonState();
 
             form.addEventListener('submit', (e) => {
@@ -139,12 +138,15 @@
                 submitButton.textContent = '送信中...';
                 submitButton.disabled = true;
                 submitButton.classList.add('opacity-50', 'cursor-not-allowed');
-            
-                // フォームが正常に送信された後、thanksページにリダイレクト
-                // Googleフォームが回答を処理する時間を考慮して、少し遅延させる
-                setTimeout(() => {
+
+                // フォームがiFrame内で送信された後に発火するonloadイベントを設定
+                // このイベントは、iFrameにGoogleフォームの応答がロードされた時点で実行されます
+                iframe.onload = () => {
+                    console.log("Google Formsへの送信が完了しました。");
+                    // 自作の完了画面へリダイレクト
                     window.location.href = './thanks.html';
-                }, 1500); // 1.5秒後にリダイレクト
+                };
+
             });
         });
     </script>
