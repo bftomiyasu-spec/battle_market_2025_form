@@ -14,7 +14,7 @@
         }
     </style>
 </head>
-<body class="bg-white-100 text-gray-900 flex items-center justify-center p-6 min-h-screen">
+<body class="bg-gray-100 text-gray-900 flex items-center justify-center p-6 min-h-screen">
 
     <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg border border-gray-200">
         <div class="text-center">
@@ -27,8 +27,11 @@
             予約&nbsp;¥3,500（U-22&nbsp;¥3,000）&nbsp;/&nbsp;当日&nbsp;¥4,000&nbsp;<br class="sm:hidden">すべて飲み放題＋フード付き
         </p>
 
-        <!--ここにGoogleフォームのレスポンスURLを入力する（実際のGoogleフォーム回答画面から開発者ツールでformタグのactioin属性を探す）-->
-        <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse?usp=pp_url&continue=https://bftomiyasu-spec.github.io/battle_market_2025_form/thanks.html" method="POST" class="space-y-6">
+        <!--
+            フォーム送信はJavaScriptで処理されます。
+            action属性は、GoogleフォームのURLを参考に残しておきます。
+        -->
+        <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse" method="POST" class="space-y-6">
 
             <!--
                 新しいGoogleフォームの「一般チケットの枚数を選択してください」の
@@ -68,7 +71,7 @@
             <!--
                 新しいGoogleフォームの「代表者氏名（フルネーム）」の
                 項目に対応するname属性（例: entry.1234567890）を
-                name="entry.1234567890" の部分に貼り付けてください。
+                name="entry.1402801926" の部分に貼り付けてください。
             -->
             <div>
                 <label for="full-name" class="block text-sm font-medium text-gray-700 mb-2">代表者氏名（フルネーム）</label>
@@ -78,7 +81,7 @@
             <!--
                 新しいGoogleフォームの「メールアドレス」の
                 項目に対応するname属性（例: entry.1234567890）を
-                name="entry.1234567890" の部分に貼り付けてください。
+                name="entry.476909455" の部分に貼り付けてください。
             -->
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-2">メールアドレス</label>
@@ -95,6 +98,45 @@
 
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', async (e) => {
+                // デフォルトのフォーム送信をキャンセル
+                e.preventDefault();
+
+                // フォームのデータを取得
+                const formData = new FormData(form);
+
+                // GoogleフォームのURLを組み立て
+                // ここでは、Googleフォームの「送信」->「埋め込みHTML」からコピーしたURLを使用してください。
+                const googleFormsUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc2kTAzHbwnFxHgytbJ7x4ZjlhK5KRpvoStBH44K7zGgxQwnw/formResponse';
+                const params = new URLSearchParams();
+
+                // フォームデータからnameとvalueを取得し、URLSearchParamsに追加
+                for (const [name, value] of formData.entries()) {
+                    params.append(name, value);
+                }
+
+                // GoogleフォームにGETリクエストを送信
+                // CORSエラーを避けるため、GETリクエストを使用します
+                try {
+                    await fetch(`${googleFormsUrl}?${params.toString()}`, {
+                        method: 'GET',
+                        mode: 'no-cors' // クロスオリジン問題を回避するため
+                    });
+
+                    // 成功したらサンクスページにリダイレクト
+                    window.location.href = './thanks.html';
+
+                } catch (error) {
+                    console.error('予約送信中にエラーが発生しました:', error);
+                    // エラー時もサンクスページにリダイレクト
+                    window.location.href = './thanks.html';
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
-
